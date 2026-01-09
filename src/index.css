@@ -1,1 +1,79 @@
 @import "tailwindcss";
+
+/* 부스러기 떨어지는 애니메이션 */
+@keyframes fall-explode {
+  0% {
+    transform: translate(0, 0) rotate(var(--r-start));
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(var(--tx), 100px) rotate(var(--r-end));
+    opacity: 0;
+  }
+}
+
+.animate-fall {
+  animation: fall-explode 0.8s ease-out forwards;
+}
+
+/* 먹을 때 흔들림 효과 */
+@keyframes bite-shake {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  25% {
+    transform: scale(0.95) rotate(-3deg);
+  }
+
+  50% {
+    transform: scale(0.95) rotate(3deg);
+  }
+
+  75% {
+    transform: scale(0.98) rotate(-1deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.animate-bite-shake {
+  animation: bite-shake 0.3s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+/* 텍스트 떠오르는 효과 */
+@keyframes float-up-fade {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+  }
+
+  20% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(-50%, -150%) scale(1);
+    opacity: 0;
+  }
+}
+
+.animate-float-up {
+  animation: float-up-fade 0.8s ease-out forwards;
+}
+
+/* 모바일 터치 하이라이트 제거 */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 부드러운 스크롤 방지 (모바일) */
+html,
+body {
+  overscroll-behavior: none;
+  touch-action: manipulation;
+}
