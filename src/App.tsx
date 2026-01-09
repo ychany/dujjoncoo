@@ -7,7 +7,7 @@ import EndingScreen from './components/EndingScreen'
 import Crumbs from './components/Crumbs'
 import { useSound } from './hooks/useSound'
 
-const BITES_TO_FINISH = 15 // 쿠키 하나 먹는데 필요한 클릭 수
+const BITES_TO_FINISH = 23 // 쿠키 하나 먹는데 필요한 클릭 수
 const COOKIE_PRICE = 6000
 const COOLDOWN_MS = 200 // 연타 쿨타임
 
