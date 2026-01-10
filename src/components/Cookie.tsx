@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useId } from 'react'
 
 interface CookieProps {
   stage: number // 0-5 (0: 새것, 5: 다 먹음)
@@ -7,6 +7,7 @@ interface CookieProps {
 }
 
 export default function Cookie({ stage, onClick, isEating }: CookieProps) {
+  const uniqueId = useId().replace(/:/g, '')
   // 베어먹은 비율 (0 = 안먹음, 1 = 다먹음) - 천천히 증가
   const biteRatio = [0, 0.12, 0.26, 0.42, 0.6, 0.82][Math.min(stage, 5)]
 
@@ -57,30 +58,32 @@ export default function Cookie({ stage, onClick, isEating }: CookieProps) {
 
   return (
     <div
-      className="relative cursor-pointer select-none active:scale-95 transition-transform"
+      className="relative cursor-pointer select-none"
       onClick={onClick}
     >
-      {/* 그림자 */}
-      <div className="absolute bottom-[-20px] left-1/2 -translate-x-1/2 w-48 h-10 bg-black/20 rounded-[50%] blur-lg" />
 
       {/* 쿠키 SVG */}
       <svg
         viewBox="0 0 100 100"
         className={`w-72 h-72 md:w-80 md:h-80 transition-transform duration-100 ${
-          isEating ? 'animate-bite-shake' : 'hover:scale-105'
+          isEating ? 'animate-bite-shake' : 'hover:scale-105 active:scale-95'
         }`}
-        style={{ filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.3))' }}
       >
         <defs>
+          {/* 그림자 필터 */}
+          <filter id={`shadow-${uniqueId}`} x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="4" stdDeviation="4" floodOpacity="0.3" />
+          </filter>
+
           {/* 초콜릿 껍질 그라데이션 */}
-          <radialGradient id="shellGradient" cx="35%" cy="35%" r="65%">
+          <radialGradient id={`shellGradient-${uniqueId}`} cx="35%" cy="35%" r="65%">
             <stop offset="0%" stopColor="#7D5A4F" />
             <stop offset="50%" stopColor="#5D4037" />
             <stop offset="100%" stopColor="#3E2723" />
           </radialGradient>
 
           {/* 남은 쿠키 클립 (베어먹은 부분 제외) */}
-          <clipPath id="cookieClip">
+          <clipPath id={`cookieClip-${uniqueId}`}>
             <path d={`
               M ${biteX + 15},2
               Q 100,2 98,50
@@ -92,7 +95,7 @@ export default function Cookie({ stage, onClick, isEating }: CookieProps) {
           </clipPath>
 
           {/* 타원형 단면 (비스듬하게 베어문 내부) */}
-          <clipPath id="crossSectionClip">
+          <clipPath id={`crossSectionClip-${uniqueId}`}>
             <ellipse
               cx={biteX + 18}
               cy="50"
@@ -101,16 +104,16 @@ export default function Cookie({ stage, onClick, isEating }: CookieProps) {
             />
           </clipPath>
 
-          {/* 원형 마스크 */}
-          <mask id="circleMask">
-            <circle cx="50" cy="50" r="48" fill="white" />
-          </mask>
+          {/* 원형 클립 */}
+          <clipPath id={`circleClip-${uniqueId}`}>
+            <circle cx="50" cy="50" r="48" />
+          </clipPath>
         </defs>
 
-        {/* 메인 그룹 - 원형 마스크 적용 */}
-        <g mask="url(#circleMask)">
+        {/* 메인 그룹 - 원형 클립 적용 + 그림자 */}
+        <g clipPath={`url(#circleClip-${uniqueId})`} filter={`url(#shadow-${uniqueId})`}>
           {/* 전체 쿠키를 cookieClip으로 자름 (내부 + 껍질 같이 먹힘) */}
-          <g clipPath={stage > 0 ? "url(#cookieClip)" : undefined}>
+          <g clipPath={stage > 0 ? `url(#cookieClip-${uniqueId})` : undefined}>
             {/* 1. 내부 (베이지 베이스 + 면발 + 피스타치오) */}
             <circle cx="50" cy="50" r="48" fill="#C4A574" />
 
@@ -150,7 +153,7 @@ export default function Cookie({ stage, onClick, isEating }: CookieProps) {
             ))}
 
             {/* 2. 초콜릿 껍질 (위에 덮음) */}
-            <circle cx="50" cy="50" r="48" fill="url(#shellGradient)" />
+            <circle cx="50" cy="50" r="48" fill={`url(#shellGradient-${uniqueId})`} />
 
             {/* 하이라이트 */}
             <ellipse cx="35" cy="30" rx="15" ry="10" fill="white" opacity="0.1" />
@@ -161,7 +164,7 @@ export default function Cookie({ stage, onClick, isEating }: CookieProps) {
 
           {/* 3. 타원형 단면 (실제 두쫀쿠처럼 비스듬하게 베어문 내부) */}
           {stage > 0 && (
-            <g clipPath="url(#crossSectionClip)">
+            <g clipPath={`url(#crossSectionClip-${uniqueId})`}>
               {/* 피스타치오 크림 베이스 (연두~황금색) */}
               <ellipse
                 cx={biteX + 18}
@@ -229,25 +232,6 @@ export default function Cookie({ stage, onClick, isEating }: CookieProps) {
         </div>
       )}
 
-      {/* 부스러기 */}
-      {stage > 0 && (
-        <div className="absolute bottom-[-5px] left-1/2 -translate-x-1/2 w-32">
-          {[...Array(Math.min(stage * 2, 8))].map((_, i) => (
-            <div
-              key={i}
-              className="absolute rounded-sm"
-              style={{
-                left: `${25 + Math.random() * 50}%`,
-                width: 3 + Math.random() * 4,
-                height: 2 + Math.random() * 3,
-                backgroundColor: ['#5D4037', '#4E342E', '#6D4C41'][Math.floor(Math.random() * 3)],
-                opacity: 0.7,
-                transform: `translateY(${Math.random() * 8}px) rotate(${Math.random() * 360}deg)`,
-              }}
-            />
-          ))}
-        </div>
-      )}
     </div>
   )
 }
