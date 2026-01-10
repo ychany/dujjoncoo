@@ -26,7 +26,6 @@ export function useStats() {
     // 동접자 수 구독 (presence 노드의 자식 수)
     const unsubActive = onValue(presenceRef, (snapshot) => {
       const count = snapshot.exists() ? Object.keys(snapshot.val()).length : 0
-      console.log('[Presence] 업데이트:', count, '명', snapshot.val())
       setActiveUsers(count)
     })
 
@@ -37,15 +36,12 @@ export function useStats() {
 
     // Firebase 연결 상태 감지
     const unsubConnected = onValue(connectedRef, (snapshot) => {
-      console.log('[Firebase] 연결 상태:', snapshot.val(), '등록됨:', isRegistered.current)
       if (snapshot.val() === true && !isRegistered.current) {
         isRegistered.current = true
         // 먼저 disconnect 핸들러 등록
         onDisconnect(myPresenceRef).remove()
         // 그 다음 presence 등록
         set(myPresenceRef, { online: true, timestamp: Date.now() })
-          .then(() => console.log('[Presence] 등록 성공:', SESSION_ID))
-          .catch((err) => console.error('[Presence] 등록 실패:', err))
       }
     })
 
