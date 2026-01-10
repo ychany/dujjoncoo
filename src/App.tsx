@@ -6,6 +6,7 @@ import EatingMessage from './components/EatingMessage'
 import EndingScreen from './components/EndingScreen'
 import Crumbs from './components/Crumbs'
 import { useSound } from './hooks/useSound'
+import { useStats } from './hooks/useStats'
 
 const BITES_TO_FINISH = 23 // 쿠키 하나 먹는데 필요한 클릭 수
 const COOKIE_PRICE = 6000
@@ -20,6 +21,7 @@ function App() {
   const [started, setStarted] = useState(false)
 
   const { playBiteSound, playCompleteSound } = useSound()
+  const { activeUsers, todayCookies, addCookie } = useStats()
 
   const progress = (biteCount / BITES_TO_FINISH) * 100
   const stage = Math.floor((biteCount / BITES_TO_FINISH) * 5)
@@ -36,19 +38,19 @@ function App() {
 
     setTimeout(() => setIsEating(false), 100)
 
-    setBiteCount(prev => {
-      const newCount = prev + 1
-      if (newCount >= BITES_TO_FINISH) {
-        // 쿠키 완식!
-        setTimeout(() => {
-          playCompleteSound()
-          setCookiesEaten(c => c + 1)
-          setShowEnding(true)
-        }, 300)
-      }
-      return newCount
-    })
-  }, [lastBiteTime, biteCount, playBiteSound, playCompleteSound])
+    const newCount = biteCount + 1
+    setBiteCount(newCount)
+
+    if (newCount >= BITES_TO_FINISH) {
+      // 쿠키 완식!
+      setTimeout(() => {
+        playCompleteSound()
+        setCookiesEaten(c => c + 1)
+        addCookie() // Firebase에 기록
+        setShowEnding(true)
+      }, 300)
+    }
+  }, [lastBiteTime, biteCount, playBiteSound, playCompleteSound, addCookie])
 
   const handleReset = useCallback(() => {
     setBiteCount(0)
@@ -126,8 +128,11 @@ function App() {
       </div>
 
       {/* 하단: 진행도 */}
-      <div className="pb-8 w-full flex justify-center">
+      <div className="pb-8 w-full flex flex-col items-center gap-3">
         <ProgressBar progress={Math.min(progress, 100)} />
+        <p className="text-amber-600 text-xs">
+          {activeUsers}명 먹는 중 | 오늘 두쫀쿠 {todayCookies}개
+        </p>
       </div>
 
       {/* 엔딩 화면 */}
