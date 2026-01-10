@@ -42,7 +42,7 @@ function App() {
 
   const progress = (biteCount / BITES_TO_FINISH) * 100
   const stage = Math.floor((biteCount / BITES_TO_FINISH) * 5)
-  const savedAmount = Math.floor((biteCount / BITES_TO_FINISH) * COOKIE_PRICE) + cookiesEaten * COOKIE_PRICE
+  const savedAmount = Math.floor((biteCount / BITES_TO_FINISH) * COOKIE_PRICE)
 
   const handleBite = useCallback(() => {
     const now = Date.now()
