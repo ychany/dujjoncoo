@@ -189,6 +189,31 @@ export default function Cookie({ stage, onClick, isEating }: CookieProps) {
                 )
               })}
 
+              {/* 카다이프 가닥 (짧고 자연스러운 면발) */}
+              {noodles.slice(0, 60).map((n, i) => {
+                const kadaifColors = ['#E8D5A8', '#D4C090', '#C9B580', '#DEC898', '#E0C890', '#D8C488']
+                const startX = 10 + (n.x % 80)
+                const startY = 15 + (n.y % 70)
+                const len = 4 + n.len * 0.6 // 짧은 길이
+                const angle = n.angle + (n.brightness - 0.5) * 2 // 다양한 각도
+                const endX = startX + len * Math.cos(angle)
+                const endY = startY + len * Math.sin(angle)
+                // 약간의 곡선
+                const ctrlX = (startX + endX) / 2 + (n.brightness - 0.5) * 3
+                const ctrlY = (startY + endY) / 2 + (n.angle) * 2
+                return (
+                  <path
+                    key={`kadaif-${i}`}
+                    d={`M ${startX} ${startY} Q ${ctrlX} ${ctrlY} ${endX} ${endY}`}
+                    stroke={kadaifColors[i % kadaifColors.length]}
+                    strokeWidth={0.4 + n.thickness * 0.3}
+                    fill="none"
+                    strokeLinecap="round"
+                    opacity={0.8 + n.brightness * 0.15}
+                  />
+                )
+              })}
+
               {/* 피스타치오 조각들 (초록색) */}
               {pistachios.map((p, i) => (
                 <ellipse
