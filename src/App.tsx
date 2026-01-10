@@ -75,47 +75,16 @@ function App() {
           <h1 className="text-5xl md:text-6xl font-black text-amber-800 mb-2">
             두쫀쿠
           </h1>
-          <p className="text-amber-600 text-lg mb-8">
+          <p className="text-amber-600 text-lg mb-6">
             두바이 쫀득쿠키 먹방 체험
           </p>
 
-          {/* 쿠키 미리보기 - 리얼 버전 */}
-          <div className="w-52 h-52 mx-auto mb-8 rounded-full relative">
-            {/* 그림자 */}
-            <div className="absolute bottom-[-15px] left-1/2 -translate-x-1/2 w-36 h-8 bg-black/20 rounded-full blur-xl" />
-
-            {/* 쿠키 본체 */}
-            <div
-              className="absolute inset-0 rounded-full"
-              style={{
-                background: 'radial-gradient(ellipse at 30% 30%, #8B6D5C 0%, #5D4037 40%, #4E342E 70%, #3E2723 100%)',
-                boxShadow: 'inset 0 -10px 30px rgba(0,0,0,0.3), inset 0 10px 20px rgba(255,255,255,0.05)',
-              }}
-            />
-
-            {/* 코코아 텍스처 */}
-            <div
-              className="absolute inset-0 rounded-full opacity-30"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-              }}
-            />
-
-            {/* 하이라이트 */}
-            <div
-              className="absolute rounded-full opacity-15"
-              style={{
-                top: '10%',
-                left: '15%',
-                width: '30%',
-                height: '20%',
-                background: 'radial-gradient(ellipse, rgba(255,255,255,0.5) 0%, transparent 70%)',
-                filter: 'blur(6px)',
-              }}
-            />
+          {/* 쿠키 미리보기 - 실제 Cookie 컴포넌트 사용 */}
+          <div className="mb-6 pointer-events-none scale-90">
+            <Cookie stage={0} onClick={() => {}} isEating={false} />
           </div>
 
-          <div className="bg-amber-50 rounded-xl p-4 mb-8 max-w-xs mx-auto">
+          <div className="bg-amber-50 rounded-xl p-4 mb-6 max-w-xs mx-auto">
             <div className="text-amber-700 font-bold">실제 가격</div>
             <div className="text-3xl font-black text-amber-800">₩6,000</div>
             <div className="text-amber-500 text-sm">(여기선 무료)</div>
