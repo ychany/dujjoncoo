@@ -42,10 +42,8 @@ export default function Cookie({ stage, onClick, isEating }: CookieProps) {
     return pieces
   }, [])
 
-  // 비스듬한 컷 라인 계산 (왼쪽에서 오른쪽으로 먹힘)
-  // 위에서 봤을 때 비스듬하게 보이도록 - 단면 폭은 고정, 위치만 이동
-  const cutX = biteRatio * 95 // 먹힌 위치 (0 ~ 95)
-  const crossSectionWidth = 8 // 단면 보이는 폭 (고정)
+  // 베어먹은 위치 계산
+  const biteX = biteRatio * 85 // 먹힌 위치 (0 ~ 85)
 
   return (
     <div
@@ -71,14 +69,21 @@ export default function Cookie({ stage, onClick, isEating }: CookieProps) {
             <stop offset="100%" stopColor="#3E2723" />
           </radialGradient>
 
-          {/* 남은 쿠키 클립 (단면 오른쪽) */}
+          {/* 남은 쿠키 클립 (베어먹은 부분 제외) */}
           <clipPath id="cookieClip">
-            <rect x={cutX + crossSectionWidth} y="0" width={100 - cutX - crossSectionWidth} height="100" />
+            <path d={`
+              M ${biteX + 15},2
+              Q 100,2 98,50
+              Q 100,98 ${biteX + 8},98
+              L ${biteX + 8},98
+              Q ${biteX - 5},50 ${biteX + 15},2
+              Z
+            `} />
           </clipPath>
 
-          {/* 단면 영역 (비스듬하게 보이는 내부) */}
+          {/* 타원형 단면 (비스듬하게 베어문 내부) */}
           <clipPath id="crossSectionClip">
-            <rect x={cutX} y="0" width={crossSectionWidth} height="100" />
+            <ellipse cx={biteX + 25} cy="50" rx="22" ry="42" />
           </clipPath>
 
           {/* 원형 마스크 */}
@@ -139,55 +144,49 @@ export default function Cookie({ stage, onClick, isEating }: CookieProps) {
             <ellipse cx="50" cy="75" rx="20" ry="8" fill="black" opacity="0.15" />
           </g>
 
-          {/* 3. 단면 (위에서 봤을 때 비스듬하게 보이는 내부) */}
+          {/* 3. 타원형 단면 (실제 두쫀쿠처럼 비스듬하게 베어문 내부) */}
           {stage > 0 && (
             <g clipPath="url(#crossSectionClip)">
-              {/* 내부 베이스 */}
-              <rect x="0" y="0" width="100" height="100" fill="#C4A574" />
+              {/* 피스타치오 크림 베이스 (연두~황금색) */}
+              <ellipse cx={biteX + 25} cy="50" rx="22" ry="42" fill="#B8A54C" />
 
-              {/* 카다이프 면발 */}
-              {noodles.slice(0, 150).map((n, i) => {
-                let color
-                if (n.brightness > 0.75) color = '#D9C4A0'
-                else if (n.brightness > 0.5) color = '#C9B48A'
-                else if (n.brightness > 0.25) color = '#B8A070'
-                else color = '#A08050'
-
+              {/* 피스타치오 크림 텍스처 */}
+              {noodles.slice(0, 300).map((n, i) => {
+                const colors = ['#C4B454', '#A89A3C', '#D4C464', '#98892C', '#BCA844']
                 return (
-                  <line
-                    key={`cross-noodle-${i}`}
-                    x1={n.x}
-                    y1={n.y}
-                    x2={n.x + n.len * 0.5 * Math.cos(n.angle)}
-                    y2={n.y + n.len * 0.5 * Math.sin(n.angle)}
-                    stroke={color}
-                    strokeWidth={n.thickness * 0.8}
-                    strokeLinecap="round"
+                  <circle
+                    key={`cream-${i}`}
+                    cx={n.x}
+                    cy={n.y}
+                    r={0.8 + n.thickness * 0.4}
+                    fill={colors[i % colors.length]}
+                    opacity={0.8}
                   />
                 )
               })}
 
-              {/* 피스타치오 */}
+              {/* 피스타치오 조각들 (초록색) */}
               {pistachios.map((p, i) => (
                 <ellipse
                   key={`cross-pistachio-${i}`}
                   cx={p.x}
                   cy={p.y}
-                  rx={p.width / 2}
-                  ry={p.height / 2}
+                  rx={p.width / 2 + 1}
+                  ry={p.height / 2 + 0.5}
                   fill={p.color}
                   transform={`rotate(${p.rotation} ${p.x} ${p.y})`}
                 />
               ))}
 
-              {/* 오른쪽 경계 (초콜릿 껍질 두께) */}
-              <line
-                x1={cutX + crossSectionWidth}
-                y1="0"
-                x2={cutX + crossSectionWidth}
-                y2="100"
+              {/* 단면 테두리 (초콜릿 껍질 두께) */}
+              <ellipse
+                cx={biteX + 25}
+                cy="50"
+                rx="22"
+                ry="42"
+                fill="none"
                 stroke="#3E2723"
-                strokeWidth="3"
+                strokeWidth="4"
               />
             </g>
           )}
