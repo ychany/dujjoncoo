@@ -98,6 +98,10 @@ function App() {
           >
             🍪 먹으러 가기
           </button>
+
+          <p className="text-amber-600 text-xs mt-4">
+            {activeUsers}명 먹는 중 | 오늘 두쫀쿠 {todayCookies}개
+          </p>
         </div>
       </div>
     )
