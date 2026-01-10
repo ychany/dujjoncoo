@@ -44,9 +44,6 @@ export default function EndingScreen({ cookiesEaten, onReset }: EndingScreenProp
           <div className="text-green-600 text-4xl font-black">
             ₩{totalSaved.toLocaleString()}
           </div>
-          <div className="text-green-600 text-sm mt-2">
-            🍪 쿠키 {cookiesEaten}개 먹음
-          </div>
         </div>
 
         {/* 한마디 */}

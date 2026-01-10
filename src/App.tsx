@@ -28,6 +28,7 @@ function App() {
   const handleBite = useCallback(() => {
     const now = Date.now()
     if (now - lastBiteTime < COOLDOWN_MS) return
+    if (biteCount >= BITES_TO_FINISH) return // 이미 다 먹었으면 무시
 
     setLastBiteTime(now)
     setIsEating(true)
@@ -47,7 +48,7 @@ function App() {
       }
       return newCount
     })
-  }, [lastBiteTime, playBiteSound, playCompleteSound])
+  }, [lastBiteTime, biteCount, playBiteSound, playCompleteSound])
 
   const handleReset = useCallback(() => {
     setBiteCount(0)

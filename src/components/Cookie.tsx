@@ -45,6 +45,16 @@ export default function Cookie({ stage, onClick, isEating }: CookieProps) {
   // 베어먹은 위치 계산
   const biteX = biteRatio * 85 // 먹힌 위치 (0 ~ 85)
 
+  // 단면 크기 계산 (먹을수록 작아짐)
+  const getSectionSize = () => {
+    if (biteRatio > 0.8) return { rx: 8, ry: 18 }   // 83%+ 아주 작게
+    if (biteRatio > 0.65) return { rx: 16, ry: 32 } // 70%+
+    if (biteRatio > 0.55) return { rx: 18, ry: 36 } // 60%+
+    if (biteRatio > 0.35) return { rx: 20, ry: 38 } // 42%+
+    return { rx: 22, ry: 42 }                        // 기본
+  }
+  const sectionSize = getSectionSize()
+
   return (
     <div
       className="relative cursor-pointer select-none active:scale-95 transition-transform"
@@ -84,10 +94,10 @@ export default function Cookie({ stage, onClick, isEating }: CookieProps) {
           {/* 타원형 단면 (비스듬하게 베어문 내부) */}
           <clipPath id="crossSectionClip">
             <ellipse
-              cx={biteX + 25}
+              cx={biteX + 18}
               cy="50"
-              rx={biteRatio > 0.8 ? 12 : 22}
-              ry={biteRatio > 0.8 ? 25 : 42}
+              rx={sectionSize.rx}
+              ry={sectionSize.ry}
             />
           </clipPath>
 
@@ -154,10 +164,10 @@ export default function Cookie({ stage, onClick, isEating }: CookieProps) {
             <g clipPath="url(#crossSectionClip)">
               {/* 피스타치오 크림 베이스 (연두~황금색) */}
               <ellipse
-                cx={biteX + 25}
+                cx={biteX + 18}
                 cy="50"
-                rx={biteRatio > 0.8 ? 12 : 22}
-                ry={biteRatio > 0.8 ? 25 : 42}
+                rx={sectionSize.rx}
+                ry={sectionSize.ry}
                 fill="#B8A54C"
               />
 
@@ -191,13 +201,13 @@ export default function Cookie({ stage, onClick, isEating }: CookieProps) {
 
               {/* 단면 테두리 (초콜릿 껍질 두께) */}
               <ellipse
-                cx={biteX + 25}
+                cx={biteX + 18}
                 cy="50"
-                rx={biteRatio > 0.8 ? 12 : 22}
-                ry={biteRatio > 0.8 ? 25 : 42}
+                rx={sectionSize.rx}
+                ry={sectionSize.ry}
                 fill="none"
                 stroke="#3E2723"
-                strokeWidth="4"
+                strokeWidth={biteRatio > 0.8 ? 2 : 4}
               />
             </g>
           )}
