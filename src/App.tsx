@@ -23,6 +23,23 @@ function App() {
   const { playBiteSound, playCompleteSound } = useSound()
   const { activeUsers, todayCookies, addCookie } = useStats()
 
+  const handleShare = async () => {
+    const shareText = `🍪 두쫀쿠 - 두바이 쫀득쿠키 먹방 체험\n6,000원짜리 쿠키를 무료로 먹어보세요!`
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: '두쫀쿠 - 두바이 쫀득쿠키 체험',
+          text: shareText,
+          url: window.location.href,
+        })
+      } catch {}
+    } else {
+      await navigator.clipboard.writeText(`${shareText}\n${window.location.href}`)
+      alert('링크가 복사되었습니다!')
+    }
+  }
+
   const progress = (biteCount / BITES_TO_FINISH) * 100
   const stage = Math.floor((biteCount / BITES_TO_FINISH) * 5)
   const savedAmount = Math.floor((biteCount / BITES_TO_FINISH) * COOKIE_PRICE) + cookiesEaten * COOKIE_PRICE
@@ -72,7 +89,18 @@ function App() {
   // 시작 화면
   if (!started) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-100 to-amber-200 flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-b from-amber-100 to-amber-200 flex flex-col items-center justify-center p-4 relative">
+        {/* 공유 버튼 */}
+        <button
+          onClick={handleShare}
+          className="absolute top-4 left-4 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center shadow-md hover:bg-white transition-all active:scale-95"
+          aria-label="공유"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-amber-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+          </svg>
+        </button>
+
         <div className="text-center">
           <h1 className="text-4xl md:text-5xl font-black text-amber-800 mb-1">
             두쫀쿠
@@ -109,6 +137,17 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-100 to-amber-200 flex flex-col items-center justify-between p-4 relative overflow-hidden">
+      {/* 공유 버튼 */}
+      <button
+        onClick={handleShare}
+        className="absolute top-4 left-4 w-10 h-10 bg-white/80 rounded-full flex items-center justify-center shadow-md hover:bg-white transition-all active:scale-95 z-10"
+        aria-label="공유"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-amber-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+        </svg>
+      </button>
+
       {/* 상단: 가격 표시 */}
       <div className="pt-4">
         <PriceTag saved={savedAmount} />
