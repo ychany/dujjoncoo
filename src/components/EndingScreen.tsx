@@ -3,12 +3,11 @@ interface EndingScreenProps {
   onReset: () => void
 }
 
-export default function EndingScreen({ cookiesEaten, onReset }: EndingScreenProps) {
+export default function EndingScreen({ onReset }: EndingScreenProps) {
   const COOKIE_PRICE = 6000
-  const totalSaved = cookiesEaten * COOKIE_PRICE
 
   const handleShare = async () => {
-    const shareText = `🍪 두쫀쿠 완식!\n나는 두바이 쫀득쿠키 ${cookiesEaten}개를 먹고\n₩${totalSaved.toLocaleString()}을 아꼈다!\n\n너도 먹어볼래? 👉`
+    const shareText = `🍪 두쫀쿠 완식!\n나는 두바이 쫀득쿠키를 먹고\n₩${COOKIE_PRICE.toLocaleString()}을 아꼈다!\n\n너도 먹어볼래? 👉`
 
     if (navigator.share) {
       try {
@@ -42,7 +41,7 @@ export default function EndingScreen({ cookiesEaten, onReset }: EndingScreenProp
         <div className="bg-green-100 rounded-xl p-4 my-6">
           <div className="text-green-700 text-sm mb-1">당신이 아낀 금액</div>
           <div className="text-green-600 text-4xl font-black">
-            ₩{totalSaved.toLocaleString()}
+            ₩{COOKIE_PRICE.toLocaleString()}
           </div>
         </div>
 
