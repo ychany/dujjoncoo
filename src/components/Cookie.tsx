@@ -83,7 +83,12 @@ export default function Cookie({ stage, onClick, isEating }: CookieProps) {
 
           {/* 타원형 단면 (비스듬하게 베어문 내부) */}
           <clipPath id="crossSectionClip">
-            <ellipse cx={biteX + 25} cy="50" rx="22" ry="42" />
+            <ellipse
+              cx={biteX + 25}
+              cy="50"
+              rx={biteRatio > 0.8 ? 12 : 22}
+              ry={biteRatio > 0.8 ? 25 : 42}
+            />
           </clipPath>
 
           {/* 원형 마스크 */}
@@ -148,7 +153,13 @@ export default function Cookie({ stage, onClick, isEating }: CookieProps) {
           {stage > 0 && (
             <g clipPath="url(#crossSectionClip)">
               {/* 피스타치오 크림 베이스 (연두~황금색) */}
-              <ellipse cx={biteX + 25} cy="50" rx="22" ry="42" fill="#B8A54C" />
+              <ellipse
+                cx={biteX + 25}
+                cy="50"
+                rx={biteRatio > 0.8 ? 12 : 22}
+                ry={biteRatio > 0.8 ? 25 : 42}
+                fill="#B8A54C"
+              />
 
               {/* 피스타치오 크림 텍스처 */}
               {noodles.slice(0, 300).map((n, i) => {
@@ -182,8 +193,8 @@ export default function Cookie({ stage, onClick, isEating }: CookieProps) {
               <ellipse
                 cx={biteX + 25}
                 cy="50"
-                rx="22"
-                ry="42"
+                rx={biteRatio > 0.8 ? 12 : 22}
+                ry={biteRatio > 0.8 ? 25 : 42}
                 fill="none"
                 stroke="#3E2723"
                 strokeWidth="4"
