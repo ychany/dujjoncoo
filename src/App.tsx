@@ -72,27 +72,27 @@ function App() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-amber-100 to-amber-200 flex flex-col items-center justify-center p-4">
         <div className="text-center">
-          <h1 className="text-5xl md:text-6xl font-black text-amber-800 mb-2">
+          <h1 className="text-4xl md:text-5xl font-black text-amber-800 mb-1">
             두쫀쿠
           </h1>
-          <p className="text-amber-600 text-lg mb-6">
+          <p className="text-amber-600 text-sm mb-4">
             두바이 쫀득쿠키 먹방 체험
           </p>
 
           {/* 쿠키 미리보기 - 실제 Cookie 컴포넌트 사용 */}
-          <div className="mb-6 pointer-events-none scale-90">
+          <div className="mb-4 pointer-events-none scale-75">
             <Cookie stage={0} onClick={() => {}} isEating={false} />
           </div>
 
-          <div className="bg-amber-50 rounded-xl p-4 mb-6 max-w-xs mx-auto">
-            <div className="text-amber-700 font-bold">실제 가격</div>
-            <div className="text-3xl font-black text-amber-800">₩6,000</div>
-            <div className="text-amber-500 text-sm">(여기선 무료)</div>
+          <div className="bg-amber-50 rounded-xl p-3 mb-4 max-w-xs mx-auto">
+            <div className="text-amber-700 font-bold text-sm">실제 가격</div>
+            <div className="text-2xl font-black text-amber-800">₩6,000</div>
+            <div className="text-amber-500 text-xs">(여기선 무료)</div>
           </div>
 
           <button
             onClick={() => setStarted(true)}
-            className="bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-12 rounded-2xl font-bold text-xl shadow-lg hover:shadow-xl transition-all active:scale-95"
+            className="bg-gradient-to-r from-green-500 to-green-600 text-white py-3 px-10 rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl transition-all active:scale-95"
           >
             🍪 먹으러 가기
           </button>
