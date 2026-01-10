@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getDatabase, ref, onValue, increment, onDisconnect } from 'firebase/database'
+import { getDatabase, ref, onValue, onDisconnect } from 'firebase/database'
 
 const firebaseConfig = {
   apiKey: "AIzaSyCQcxd7ssTi2Q8Dw7Qrpd0ttbeOmX7mCsc",
@@ -19,4 +19,4 @@ export const db = getDatabase(app)
 export const statsRef = ref(db, 'stats')
 export const presenceRef = ref(db, 'presence')
 
-export { ref, onValue, increment, onDisconnect }
+export { ref, onValue, onDisconnect }
