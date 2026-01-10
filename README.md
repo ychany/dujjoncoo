@@ -9,21 +9,42 @@
 
 ## 주요 기능
 
-- 터치/클릭으로 쿠키 먹기
-- 스페이스바 지원
-- 실시간 동접자 수 표시
+- 터치/클릭으로 쿠키 먹기 (스페이스바 지원)
+- 실시간 동접자 수 표시 (Firebase Presence)
 - 오늘 먹힌 쿠키 수 집계
 - 쿠키 단면의 카다이프 면발과 피스타치오 크림 시각화
 - 먹는 중 랜덤 대사 표시
 - 완식 후 공유 기능
 - 반응형 디자인 (모바일/웹)
+- 쿠키 부스러기 애니메이션
 
 ## 기술 스택
 
 - React 19 + TypeScript
 - Vite
 - Tailwind CSS v4
-- Firebase Realtime Database (실시간 통계)
+- Firebase Realtime Database
+  - Presence 시스템 (실시간 동접자)
+  - Transaction (쿠키 카운트)
+
+## 프로젝트 구조
+
+```
+src/
+├── components/
+│   ├── Cookie.tsx        # 쿠키 SVG 컴포넌트
+│   ├── Crumbs.tsx        # 부스러기 애니메이션
+│   ├── EatingMessage.tsx # 먹방 대사
+│   ├── EndingScreen.tsx  # 완식 화면
+│   ├── PriceTag.tsx      # 가격 표시
+│   └── ProgressBar.tsx   # 진행바
+├── hooks/
+│   ├── useSound.ts       # 효과음
+│   └── useStats.ts       # Firebase 통계
+├── lib/
+│   └── firebase.ts       # Firebase 설정
+└── App.tsx               # 메인 앱
+```
 
 ## 시작하기
 
@@ -38,10 +59,32 @@ npm run dev
 npm run build
 ```
 
+## Firebase 설정
+
+Firebase Realtime Database 규칙:
+
+```json
+{
+  "rules": {
+    "presence": {
+      ".read": true,
+      "$sessionId": {
+        ".write": true
+      }
+    },
+    "stats": {
+      "cookies": {
+        "$date": {
+          ".read": true,
+          ".write": true,
+          ".validate": "newData.isNumber() && newData.val() >= data.val()"
+        }
+      }
+    }
+  }
+}
+```
+
 ## 배포
 
 Vercel에 배포되어 있습니다.
-
-## 라이선스
-
-MIT
