@@ -110,15 +110,18 @@ function App() {
 
       {/* 중앙: 쿠키 */}
       <div className="flex-1 flex flex-col items-center justify-center relative">
-        <EatingMessage biteCount={biteCount} show={!showEnding} />
-
         <Cookie stage={stage} onClick={handleBite} isEating={isEating} />
 
         <Crumbs biteCount={biteCount} />
 
+        {/* 대사 */}
+        <div className="h-8 mt-4">
+          <EatingMessage biteCount={biteCount} show={!showEnding} progress={progress} />
+        </div>
+
         {/* 먹기 힌트 */}
         <p className="text-amber-600 mt-6 text-sm animate-pulse">
-          {stage < 5 ? '👆 터치해서 먹기 (스페이스바도 가능)' : ''}
+          {stage < 5 ? '👆 터치해서 먹기' : ''}
         </p>
       </div>
 

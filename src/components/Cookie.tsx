@@ -227,7 +227,7 @@ export default function Cookie({ stage, onClick, isEating }: CookieProps) {
               transform: 'translate(-50%, -50%)',
             }}
           >
-            {['아삭!', '쩝', '냠냠', '쫀득!', '바삭!'][Math.floor(Math.random() * 5)]}
+            {['쩝...', '쫀득...', '냠냠...', '쩝쩝...', '바삭!'][Math.floor(Math.random() * 5)]}
           </div>
         </div>
       )}
