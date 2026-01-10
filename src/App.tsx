@@ -169,6 +169,11 @@ function App() {
             {activeUsers}명 먹는 중 | 오늘 두쫀쿠 {todayCookies}개
           </p>
         </div>
+
+        {/* 저작권 */}
+        <p className="absolute bottom-4 text-amber-500/60 text-xs">
+          © 2025 JO YEONG CHAN. All rights reserved.
+        </p>
       </div>
     )
   }
@@ -246,10 +251,13 @@ function App() {
       </div>
 
       {/* 하단: 진행도 */}
-      <div className="pb-8 w-full flex flex-col items-center gap-3">
+      <div className="pb-4 w-full flex flex-col items-center gap-2">
         <ProgressBar progress={Math.min(progress, 100)} />
         <p className="text-amber-600 text-xs">
           {activeUsers}명 먹는 중 | 오늘 두쫀쿠 {todayCookies}개
+        </p>
+        <p className="text-amber-500/60 text-xs mt-1">
+          © 2025 JO YEONG CHAN
         </p>
       </div>
 
