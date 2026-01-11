@@ -279,7 +279,7 @@ function App() {
 
       {/* 엔딩 화면 */}
       {showEnding && (
-        <EndingScreen cookiesEaten={cookiesEaten} onReset={handleReset} />
+        <EndingScreen cookiesEaten={cookiesEaten} onReset={handleReset} onHome={() => { setStarted(false); setBiteCount(0); setShowEnding(false); }} />
       )}
     </div>
   )

@@ -1,10 +1,23 @@
 interface EndingScreenProps {
   cookiesEaten: number
   onReset: () => void
+  onHome: () => void
 }
 
-export default function EndingScreen({ onReset }: EndingScreenProps) {
+const COMPLETION_MESSAGES = [
+  '벌써 다 먹었어?',
+  '한 개 더 먹어야겠다',
+  '어 벌써 없어졌네',
+  '이거 중독성 있다',
+  '손이 멈추질 않아',
+  '진짜 맛있긴 하네',
+  '6천원 아깝지 않다',
+  '또 먹고 싶다...',
+]
+
+export default function EndingScreen({ onReset, onHome }: EndingScreenProps) {
   const COOKIE_PRICE = 6000
+  const completionMessage = COMPLETION_MESSAGES[Math.floor(Math.random() * COMPLETION_MESSAGES.length)]
 
   const handleShare = async () => {
     const shareText = `🍪 두쫀쿠 완식!\n나는 두바이 쫀득쿠키를 먹고\n₩${COOKIE_PRICE.toLocaleString()}을 아꼈다!\n\n너도 먹어볼래? 👉`
@@ -34,7 +47,7 @@ export default function EndingScreen({ onReset }: EndingScreenProps) {
 
         {/* 완식 메시지 */}
         <h2 className="text-3xl font-black text-amber-800 mb-2">
-          두쫀쿠 완식!
+          {completionMessage}
         </h2>
 
         {/* 통계 */}
@@ -64,6 +77,13 @@ export default function EndingScreen({ onReset }: EndingScreenProps) {
             className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white py-3 px-6 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all active:scale-95"
           >
             🍪 한 개 더 먹기
+          </button>
+
+          <button
+            onClick={onHome}
+            className="w-full bg-gray-200 text-gray-700 py-3 px-6 rounded-xl font-bold text-lg hover:bg-gray-300 transition-all active:scale-95"
+          >
+            🏠 홈으로
           </button>
         </div>
       </div>
