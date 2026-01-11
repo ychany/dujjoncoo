@@ -63,22 +63,13 @@ export default function EndingScreen({ onReset, onHome }: EndingScreenProps) {
           "와... 이게 {(COOKIE_PRICE).toLocaleString()}원짜리 맛..."
         </p>
 
-        {/* 메인 버튼들 */}
-        <div className="space-y-3">
-          <button
-            onClick={onReset}
-            className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white py-3 px-6 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all active:scale-95"
-          >
-            🍪 한 개 더 먹기
-          </button>
-
-          <button
-            onClick={() => window.open('https://link.coupang.com/a/dpV3lE', '_blank')}
-            className="w-full bg-amber-100 text-amber-700 py-3 px-6 rounded-xl font-bold text-lg hover:bg-amber-200 transition-all active:scale-95"
-          >
-            🛒 진짜 두쫀쿠 사러가기
-          </button>
-        </div>
+        {/* 메인 버튼 */}
+        <button
+          onClick={onReset}
+          className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white py-3 px-6 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all active:scale-95"
+        >
+          🍪 한 개 더 먹기
+        </button>
 
         {/* 서브 버튼들 */}
         <div className="grid grid-cols-2 gap-2 mt-3">
@@ -94,6 +85,20 @@ export default function EndingScreen({ onReset, onHome }: EndingScreenProps) {
           >
             📤 공유하기
           </button>
+        </div>
+
+        {/* 쿠팡 파트너스 */}
+        <div className="mt-4 pt-4 border-t border-amber-200">
+          <button
+            onClick={() => window.open('https://link.coupang.com/a/dpV3lE', '_blank')}
+            className="w-full bg-amber-100 text-amber-700 py-3 px-6 rounded-xl font-bold text-lg hover:bg-amber-200 transition-all active:scale-95"
+          >
+            🛒 진짜 두쫀쿠 사러가기
+          </button>
+          <p className="text-gray-400 text-xs mt-2">
+            이 포스팅은 쿠팡 파트너스 활동의 일환으로,<br />
+            이에 따른 일정액의 수수료를 제공받습니다.
+          </p>
         </div>
       </div>
     </div>
