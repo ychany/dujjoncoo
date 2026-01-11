@@ -63,15 +63,8 @@ export default function EndingScreen({ onReset, onHome }: EndingScreenProps) {
           "와... 이게 {(COOKIE_PRICE).toLocaleString()}원짜리 맛..."
         </p>
 
-        {/* 버튼들 */}
+        {/* 메인 버튼들 */}
         <div className="space-y-3">
-          <button
-            onClick={handleShare}
-            className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-3 px-6 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all active:scale-95"
-          >
-            📤 친구한테 먹여보기
-          </button>
-
           <button
             onClick={onReset}
             className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white py-3 px-6 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all active:scale-95"
@@ -80,17 +73,26 @@ export default function EndingScreen({ onReset, onHome }: EndingScreenProps) {
           </button>
 
           <button
+            onClick={() => window.open('https://link.coupang.com/a/dpV3lE', '_blank')}
+            className="w-full bg-amber-100 text-amber-700 py-3 px-6 rounded-xl font-bold text-lg hover:bg-amber-200 transition-all active:scale-95"
+          >
+            🛒 진짜 두쫀쿠 사러가기
+          </button>
+        </div>
+
+        {/* 서브 버튼들 */}
+        <div className="grid grid-cols-2 gap-2 mt-3">
+          <button
             onClick={onHome}
-            className="w-full bg-gray-200 text-gray-700 py-3 px-6 rounded-xl font-bold text-lg hover:bg-gray-300 transition-all active:scale-95"
+            className="bg-gray-200 text-gray-700 py-2.5 px-4 rounded-xl font-bold hover:bg-gray-300 transition-all active:scale-95"
           >
             🏠 홈으로
           </button>
-
           <button
-            onClick={() => window.open('https://link.coupang.com/a/dpV3lE', '_blank')}
-            className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-3 px-6 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all active:scale-95"
+            onClick={handleShare}
+            className="bg-green-500 text-white py-2.5 px-4 rounded-xl font-bold hover:bg-green-600 transition-all active:scale-95"
           >
-            🛒 진짜 두바이 쿠키 사러가기
+            📤 공유하기
           </button>
         </div>
       </div>
