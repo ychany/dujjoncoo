@@ -15,10 +15,21 @@ export function useStats() {
   const [activeUsers, setActiveUsers] = useState(0)
   const [todayCookies, setTodayCookies] = useState(0)
   const [totalCookies, setTotalCookies] = useState(0)
+  const [todayKey, setTodayKey] = useState(getTodayKey())
   const isRegistered = useRef(false)
 
+  // 1분마다 날짜 변경 체크 (자정 대응)
   useEffect(() => {
-    const todayKey = getTodayKey()
+    const interval = setInterval(() => {
+      const newKey = getTodayKey()
+      if (newKey !== todayKey) {
+        setTodayKey(newKey)
+      }
+    }, 60000)
+    return () => clearInterval(interval)
+  }, [todayKey])
+
+  useEffect(() => {
     const todayCookiesRef = ref(db, `stats/cookies/${todayKey}`)
     const totalCookiesRef = ref(db, 'stats/totalCookies')
     const presenceRef = ref(db, 'presence')
@@ -63,7 +74,7 @@ export function useStats() {
         isRegistered.current = false
       }
     }
-  }, [])
+  }, [todayKey])
 
   // 쿠키 완식 시 호출
   const addCookie = () => {
