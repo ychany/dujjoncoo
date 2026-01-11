@@ -78,8 +78,9 @@ export function useStats() {
 
   // 쿠키 완식 시 호출
   const addCookie = () => {
-    const todayKey = getTodayKey()
-    const todayCookiesRef = ref(db, `stats/cookies/${todayKey}`)
+    const key = getTodayKey()
+    console.log('addCookie 호출됨, todayKey:', key)
+    const todayCookiesRef = ref(db, `stats/cookies/${key}`)
     const totalCookiesRef = ref(db, 'stats/totalCookies')
     runTransaction(todayCookiesRef, (current) => (current || 0) + 1)
     runTransaction(totalCookiesRef, (current) => (current || 0) + 1)
