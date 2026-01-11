@@ -199,6 +199,14 @@ function App() {
               </div>
               <div className="p-6 overflow-y-auto max-h-[60vh] space-y-6">
                 <div>
+                  <div className="text-amber-600 font-bold text-sm mb-2">2026.01.12</div>
+                  <ul className="text-gray-600 text-sm space-y-1">
+                    <li>- 쿠팡 파트너스 연동</li>
+                    <li>- 완식 화면 개선</li>
+                    <li>- 자정 날짜 자동 변경 기능</li>
+                  </ul>
+                </div>
+                <div>
                   <div className="text-amber-600 font-bold text-sm mb-2">2026.01.11</div>
                   <ul className="text-gray-600 text-sm space-y-1">
                     <li>- 누적 쿠키 수 표시 추가</li>
