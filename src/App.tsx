@@ -20,6 +20,7 @@ function App() {
   const [showEnding, setShowEnding] = useState(false)
   const [started, setStarted] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [showPatchNotes, setShowPatchNotes] = useState(false)
 
   const { playBiteSound, playCompleteSound } = useSound()
   const { activeUsers, todayCookies, totalCookies, addCookie } = useStats()
@@ -122,6 +123,15 @@ function App() {
                     </svg>
                     <span className="text-sm">GitHub</span>
                   </a>
+                  <button
+                    className="flex items-center gap-3 px-4 py-3 text-white hover:bg-white/10 transition-colors w-full"
+                    onClick={() => { setMenuOpen(false); setShowPatchNotes(true); }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span className="text-sm">패치노트</span>
+                  </button>
                 </div>
               </>
             )}
@@ -174,6 +184,47 @@ function App() {
         <p className="absolute bottom-4 text-amber-500/60 text-xs">
           © 2025 JO YEONG CHAN. All rights reserved.
         </p>
+
+        {/* 패치노트 모달 */}
+        {showPatchNotes && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setShowPatchNotes(false)}>
+            <div className="bg-white rounded-2xl max-w-md w-full max-h-[80vh] overflow-hidden shadow-2xl" onClick={e => e.stopPropagation()}>
+              <div className="bg-amber-500 px-6 py-4 flex justify-between items-center">
+                <h2 className="text-xl font-bold text-white">패치노트</h2>
+                <button onClick={() => setShowPatchNotes(false)} className="text-white/80 hover:text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div className="p-6 overflow-y-auto max-h-[60vh] space-y-6">
+                <div>
+                  <div className="text-amber-600 font-bold text-sm mb-2">2026.01.11</div>
+                  <ul className="text-gray-600 text-sm space-y-1">
+                    <li>- 누적 쿠키 수 표시 추가</li>
+                    <li>- 패치노트 기능 추가</li>
+                    <li>- 저작권 표시 추가</li>
+                    <li>- 실시간 동접자 수 기능 추가</li>
+                    <li>- 메뉴 버튼 및 공유 기능 추가</li>
+                    <li>- 카다이프 면발 시각화 개선</li>
+                    <li>- 가격, 대사 수정</li>
+                    <li>- 홈화면 개선</li>
+                    <li>- Firebase 연동</li>
+                  </ul>
+                </div>
+                <div>
+                  <div className="text-amber-600 font-bold text-sm mb-2">2026.01.10</div>
+                  <ul className="text-gray-600 text-sm space-y-1">
+                    <li>- 두쫀쿠 최초 출시</li>
+                    <li>- 쿠키 먹기 기능</li>
+                    <li>- 쿠키 단면 개선</li>
+                    <li>- 부스러기 애니메이션</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     )
   }
@@ -211,6 +262,15 @@ function App() {
                   </svg>
                   <span className="text-sm">GitHub</span>
                 </a>
+                <button
+                  className="flex items-center gap-3 px-4 py-3 text-white hover:bg-white/10 transition-colors w-full"
+                  onClick={() => { setMenuOpen(false); setShowPatchNotes(true); }}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <span className="text-sm">패치노트</span>
+                </button>
               </div>
             </>
           )}
@@ -264,6 +324,47 @@ function App() {
       {/* 엔딩 화면 */}
       {showEnding && (
         <EndingScreen cookiesEaten={cookiesEaten} onReset={handleReset} />
+      )}
+
+      {/* 패치노트 모달 */}
+      {showPatchNotes && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setShowPatchNotes(false)}>
+          <div className="bg-white rounded-2xl max-w-md w-full max-h-[80vh] overflow-hidden shadow-2xl" onClick={e => e.stopPropagation()}>
+            <div className="bg-amber-500 px-6 py-4 flex justify-between items-center">
+              <h2 className="text-xl font-bold text-white">패치노트</h2>
+              <button onClick={() => setShowPatchNotes(false)} className="text-white/80 hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-6 overflow-y-auto max-h-[60vh] space-y-6">
+              <div>
+                <div className="text-amber-600 font-bold text-sm mb-2">2026.01.11</div>
+                <ul className="text-gray-600 text-sm space-y-1">
+                  <li>- 누적 쿠키 수 표시 추가</li>
+                  <li>- 패치노트 기능 추가</li>
+                  <li>- 저작권 표시 추가</li>
+                  <li>- 실시간 동접자 수 기능 추가</li>
+                  <li>- 메뉴 버튼 및 공유 기능 추가</li>
+                  <li>- 카다이프 면발 시각화 개선</li>
+                  <li>- 가격, 대사 수정</li>
+                  <li>- 홈화면 개선</li>
+                  <li>- Firebase 연동</li>
+                </ul>
+              </div>
+              <div>
+                <div className="text-amber-600 font-bold text-sm mb-2">2026.01.10</div>
+                <ul className="text-gray-600 text-sm space-y-1">
+                  <li>- 두쫀쿠 최초 출시</li>
+                  <li>- 쿠키 먹기 기능</li>
+                  <li>- 쿠키 단면 개선</li>
+                  <li>- 부스러기 애니메이션</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   )
