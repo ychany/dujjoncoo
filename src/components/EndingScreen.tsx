@@ -85,6 +85,13 @@ export default function EndingScreen({ onReset, onHome }: EndingScreenProps) {
           >
             🏠 홈으로
           </button>
+
+          <button
+            onClick={() => window.open('https://link.coupang.com/a/dpV3lE', '_blank')}
+            className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-3 px-6 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all active:scale-95"
+          >
+            🛒 진짜 두바이 쿠키 사러가기
+          </button>
         </div>
       </div>
     </div>
