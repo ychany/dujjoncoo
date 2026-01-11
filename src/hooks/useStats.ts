@@ -14,11 +14,13 @@ const SESSION_ID = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
 export function useStats() {
   const [activeUsers, setActiveUsers] = useState(0)
   const [todayCookies, setTodayCookies] = useState(0)
+  const [totalCookies, setTotalCookies] = useState(0)
   const isRegistered = useRef(false)
 
   useEffect(() => {
     const todayKey = getTodayKey()
     const todayCookiesRef = ref(db, `stats/cookies/${todayKey}`)
+    const totalCookiesRef = ref(db, 'stats/totalCookies')
     const presenceRef = ref(db, 'presence')
     const connectedRef = ref(db, '.info/connected')
     const myPresenceRef = ref(db, `presence/${SESSION_ID}`)
@@ -32,6 +34,11 @@ export function useStats() {
     // 오늘 쿠키 수 구독
     const unsubCookies = onValue(todayCookiesRef, (snapshot) => {
       setTodayCookies(snapshot.val() || 0)
+    })
+
+    // 누적 쿠키 수 구독
+    const unsubTotal = onValue(totalCookiesRef, (snapshot) => {
+      setTotalCookies(snapshot.val() || 0)
     })
 
     // Firebase 연결 상태 감지
@@ -48,6 +55,7 @@ export function useStats() {
     return () => {
       unsubActive()
       unsubCookies()
+      unsubTotal()
       unsubConnected()
       // 컴포넌트 언마운트 시 presence 삭제
       if (isRegistered.current) {
@@ -61,8 +69,10 @@ export function useStats() {
   const addCookie = () => {
     const todayKey = getTodayKey()
     const todayCookiesRef = ref(db, `stats/cookies/${todayKey}`)
+    const totalCookiesRef = ref(db, 'stats/totalCookies')
     runTransaction(todayCookiesRef, (current) => (current || 0) + 1)
+    runTransaction(totalCookiesRef, (current) => (current || 0) + 1)
   }
 
-  return { activeUsers, todayCookies, addCookie }
+  return { activeUsers, todayCookies, totalCookies, addCookie }
 }

@@ -22,7 +22,7 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   const { playBiteSound, playCompleteSound } = useSound()
-  const { activeUsers, todayCookies, addCookie } = useStats()
+  const { activeUsers, todayCookies, totalCookies, addCookie } = useStats()
 
   const handleShare = async () => {
     const shareText = `🍪 두쫀쿠 - 두바이 쫀득쿠키 먹방 체험\n6,000원짜리 쿠키를 무료로 먹어보세요!`
@@ -166,7 +166,7 @@ function App() {
           </button>
 
           <p className="text-amber-600 text-xs mt-4">
-            {activeUsers}명 먹는 중 | 오늘 두쫀쿠 {todayCookies}개
+            {activeUsers}명 먹는 중 | 오늘 {todayCookies}개 (누적 {totalCookies.toLocaleString()}개)
           </p>
         </div>
 
@@ -254,7 +254,7 @@ function App() {
       <div className="pb-4 w-full flex flex-col items-center gap-2">
         <ProgressBar progress={Math.min(progress, 100)} />
         <p className="text-amber-600 text-xs">
-          {activeUsers}명 먹는 중 | 오늘 두쫀쿠 {todayCookies}개
+          {activeUsers}명 먹는 중 | 오늘 두쫀쿠 {todayCookies}개 (누적 {totalCookies.toLocaleString()}개)
         </p>
         <p className="text-amber-500/60 text-xs mt-1">
           © 2025 JO YEONG CHAN
