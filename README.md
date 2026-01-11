@@ -11,12 +11,14 @@
 
 - 터치/클릭으로 쿠키 먹기 (스페이스바 지원)
 - 실시간 동접자 수 표시 (Firebase Presence)
-- 오늘 먹힌 쿠키 수 집계
+- 오늘/누적 먹힌 쿠키 수 집계
 - 쿠키 단면의 카다이프 면발과 피스타치오 크림 시각화
 - 먹는 중 랜덤 대사 표시
 - 완식 후 공유 기능
 - 반응형 디자인 (모바일/웹)
 - 쿠키 부스러기 애니메이션
+- 쿠팡 파트너스 연동
+- 자정 날짜 자동 변경
 
 ## 기술 스택
 
@@ -77,8 +79,13 @@ Firebase Realtime Database 규칙:
         "$date": {
           ".read": true,
           ".write": true,
-          ".validate": "newData.isNumber() && newData.val() >= data.val()"
+          ".validate": "newData.isNumber() && (data.val() == null || newData.val() >= data.val())"
         }
+      },
+      "totalCookies": {
+        ".read": true,
+        ".write": true,
+        ".validate": "newData.isNumber() && newData.val() >= data.val()"
       }
     }
   }
