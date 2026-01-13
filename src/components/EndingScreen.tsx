@@ -93,7 +93,7 @@ export default function EndingScreen({ onReset, onHome }: EndingScreenProps) {
           </button>
         </div>
 
-        {/* 쿠팡 파트너스 */}
+        {/* 쿠팡 파트너스 - 앱인토스 심사 통과 후 활성화 예정
         <div className="mt-4 pt-4 border-t border-amber-200">
           <button
             onClick={() => window.open('https://link.coupang.com/a/dpV3lE', '_blank')}
@@ -106,6 +106,8 @@ export default function EndingScreen({ onReset, onHome }: EndingScreenProps) {
             이에 따른 일정액의 수수료를 제공받습니다.
           </p>
         </div>
+        */}
+
       </div>
     </div>
   )
