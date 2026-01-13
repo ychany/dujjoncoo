@@ -5,7 +5,7 @@ export default defineConfig({
   brand: {
     displayName: '두바이 왕자',
     primaryColor: '#F59E0B',
-    icon: '',
+    icon: './dujjoncoo_icon.png',
   },
   web: {
     host: 'localhost',

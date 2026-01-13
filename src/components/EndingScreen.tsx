@@ -1,3 +1,5 @@
+import { getTossShareLink, share } from '@apps-in-toss/web-framework'
+
 interface EndingScreenProps {
   cookiesEaten: number
   onReset: () => void
@@ -22,20 +24,24 @@ export default function EndingScreen({ onReset, onHome }: EndingScreenProps) {
   const handleShare = async () => {
     const shareText = `🍪 두쫀쿠 완식!\n나는 두바이 쫀득쿠키를 먹고\n₩${COOKIE_PRICE.toLocaleString()}을 아꼈다!\n\n너도 먹어볼래? 👉`
 
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: '두쫀쿠 - 두바이 쫀득쿠키 체험',
-          text: shareText,
-          url: window.location.href,
-        })
-      } catch (err) {
-        // 사용자가 공유 취소
+    try {
+      const tossLink = await getTossShareLink('intoss://dubaiprince')
+      await share({ message: `${shareText}\n${tossLink}` })
+    } catch {
+      // 토스 환경이 아닌 경우 (웹 브라우저 등)
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: '두쫀쿠 - 두바이 쫀득쿠키 체험',
+            text: shareText,
+            url: window.location.href,
+          })
+        } catch {
+          // 사용자가 공유 취소
+        }
+      } else {
+        await navigator.clipboard.writeText(shareText + ' ' + window.location.href)
       }
-    } else {
-      // 클립보드 복사 폴백
-      await navigator.clipboard.writeText(shareText + ' ' + window.location.href)
-      alert('링크가 복사되었습니다!')
     }
   }
 
