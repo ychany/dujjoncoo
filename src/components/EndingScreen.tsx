@@ -93,19 +93,21 @@ export default function EndingScreen({ onReset, onHome }: EndingScreenProps) {
           </button>
         </div>
 
-        {/* 쿠팡 파트너스 */}
-        <div className="mt-4 pt-4 border-t border-amber-200">
-          <button
-            onClick={() => window.open('https://link.coupang.com/a/dpV3lE', '_blank')}
-            className="w-full bg-amber-100 text-amber-700 py-3 px-6 rounded-xl font-bold text-lg hover:bg-amber-200 transition-all active:scale-95"
-          >
-            🛒 진짜 두쫀쿠 사러가기
-          </button>
-          <p className="text-gray-400 text-xs mt-2">
-            이 포스팅은 쿠팡 파트너스 활동의 일환으로,<br />
-            이에 따른 일정액의 수수료를 제공받습니다.
-          </p>
-        </div>
+        {/* 쿠팡 파트너스 - Vercel 배포에서만 표시 (VITE_SHOW_COUPANG=true) */}
+        {import.meta.env.VITE_SHOW_COUPANG === 'true' && (
+          <div className="mt-4 pt-4 border-t border-amber-200">
+            <button
+              onClick={() => window.open('https://link.coupang.com/a/dpV3lE', '_blank')}
+              className="w-full bg-amber-100 text-amber-700 py-3 px-6 rounded-xl font-bold text-lg hover:bg-amber-200 transition-all active:scale-95"
+            >
+              🛒 진짜 두쫀쿠 사러가기
+            </button>
+            <p className="text-gray-400 text-xs mt-2">
+              이 포스팅은 쿠팡 파트너스 활동의 일환으로,<br />
+              이에 따른 일정액의 수수료를 제공받습니다.
+            </p>
+          </div>
+        )}
 
       </div>
     </div>
