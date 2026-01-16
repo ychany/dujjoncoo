@@ -175,7 +175,7 @@ function App() {
 
         {/* 저작권 */}
         <p className="absolute bottom-4 text-amber-500/60 text-xs">
-          © 2025 JO YEONG CHAN. All rights reserved.
+          © 2026 JO YEONG CHAN. All rights reserved.
         </p>
 
         {/* 패치노트 모달 */}
@@ -289,7 +289,7 @@ function App() {
           {activeUsers}명 먹는 중 | 오늘 두쫀쿠 {todayCookies}개 (누적 {totalCookies.toLocaleString()}개)
         </p>
         <p className="text-amber-500/60 text-xs mt-1">
-          © 2025 JO YEONG CHAN
+          © 2026 JO YEONG CHAN
         </p>
       </div>
 
