@@ -150,8 +150,12 @@ function App() {
             두바이 쫀득쿠키 먹방 체험
           </p>
 
-          {/* 쿠키 미리보기 - 실제 Cookie 컴포넌트 사용 */}
-          <div className="mb-4 pointer-events-none scale-75">
+          {/* 쿠키 미리보기 - 왕관 + 실제 Cookie 컴포넌트 */}
+          <div className="mb-4 pointer-events-none scale-75 relative">
+            {/* 왕관 */}
+            <div className="absolute -top-10 left-1/2 -translate-x-1/2 z-10 text-5xl animate-bounce">
+              👑
+            </div>
             <Cookie stage={0} onClick={() => {}} isEating={false} />
           </div>
 
