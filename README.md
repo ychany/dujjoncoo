@@ -2,7 +2,7 @@
 
 6,000원짜리 두바이 쫀득쿠키를 무료로 먹어보는 가상 먹방 체험 웹앱
 
-[![Apps in Toss](apps%20in%20toss%20logo.png)](https://minion.toss.im/JesOF8A2)
+<a href="https://minion.toss.im/JesOF8A2"><img src="apps%20in%20toss%20logo.png" alt="Apps in Toss" width="180"></a>
 
 ## 플레이하기
 
