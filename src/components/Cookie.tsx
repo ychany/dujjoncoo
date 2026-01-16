@@ -8,8 +8,8 @@ interface CookieProps {
 
 export default function Cookie({ stage, onClick, isEating }: CookieProps) {
   const uniqueId = useId().replace(/:/g, '')
-  // 베어먹은 비율 (0 = 안먹음, 1 = 다먹음) - 천천히 증가
-  const biteRatio = [0, 0.12, 0.26, 0.42, 0.6, 0.82][Math.min(stage, 5)]
+  // 베어먹은 비율 (0 = 안먹음, 1 = 다먹음) - 마지막에 한 입 남김
+  const biteRatio = [0, 0.15, 0.32, 0.48, 0.64, 0.75][Math.min(stage, 5)]
 
   // 카다이프 면발 텍스처
   const noodles = useMemo(() => {
@@ -46,12 +46,12 @@ export default function Cookie({ stage, onClick, isEating }: CookieProps) {
   // 베어먹은 위치 계산
   const biteX = biteRatio * 85 // 먹힌 위치 (0 ~ 85)
 
-  // 단면 크기 계산 (먹을수록 작아짐)
+  // 단면 크기 계산 (먹을수록 작아지지만 마지막도 보기 좋게)
   const getSectionSize = () => {
-    if (biteRatio > 0.8) return { rx: 8, ry: 18 }   // 83%+ 아주 작게
-    if (biteRatio > 0.65) return { rx: 16, ry: 32 } // 70%+
-    if (biteRatio > 0.55) return { rx: 18, ry: 36 } // 60%+
-    if (biteRatio > 0.35) return { rx: 20, ry: 38 } // 42%+
+    if (biteRatio > 0.7) return { rx: 14, ry: 28 }  // 마지막 한 입 (적당한 크기 유지)
+    if (biteRatio > 0.6) return { rx: 17, ry: 34 }  // 64%
+    if (biteRatio > 0.45) return { rx: 19, ry: 38 } // 48%
+    if (biteRatio > 0.3) return { rx: 21, ry: 40 }  // 32%
     return { rx: 22, ry: 42 }                        // 기본
   }
   const sectionSize = getSectionSize()
