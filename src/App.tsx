@@ -192,6 +192,21 @@ function App() {
               </div>
               <div className="p-6 overflow-y-auto max-h-[60vh] space-y-6">
                 <div>
+                  <div className="text-amber-600 font-bold text-sm mb-2">2026.01.17</div>
+                  <ul className="text-gray-600 text-sm space-y-1">
+                    <li>- 완식 기준 17번으로 조정</li>
+                  </ul>
+                </div>
+                <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-4 text-white">
+                  <div className="font-bold text-sm mb-2 flex items-center gap-2">
+                    <span>2026.01.16</span>
+                    <span className="bg-white/20 px-2 py-0.5 rounded-full text-xs">NEW</span>
+                  </div>
+                  <ul className="text-sm space-y-1">
+                    <li>- 앱인토스 '두바이 왕자' 정식 출시!</li>
+                  </ul>
+                </div>
+                <div>
                   <div className="text-amber-600 font-bold text-sm mb-2">2026.01.12</div>
                   <ul className="text-gray-600 text-sm space-y-1">
                     <li>- 쿠팡 파트너스 연동</li>
