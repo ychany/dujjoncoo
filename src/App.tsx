@@ -200,6 +200,7 @@ function App() {
                   <ul className="text-gray-600 text-sm space-y-1">
                     <li>- 완식 기준 17번으로 조정</li>
                     <li>- 두쫀쿠 단면 개선</li>
+                    <li>- 홈 화면 왕관 추가</li>
                   </ul>
                 </div>
                 <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-4 text-white">
