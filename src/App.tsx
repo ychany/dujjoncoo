@@ -9,7 +9,7 @@ import { useSound } from './hooks/useSound'
 import { useStats } from './hooks/useStats'
 import { getTossShareLink, share } from '@apps-in-toss/web-framework'
 
-const BITES_TO_FINISH = 23 // 쿠키 하나 먹는데 필요한 클릭 수
+const BITES_TO_FINISH = 17 // 쿠키 하나 먹는데 필요한 클릭 수
 const COOKIE_PRICE = 6000
 const COOLDOWN_MS = 200 // 연타 쿨타임
 
