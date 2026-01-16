@@ -195,6 +195,7 @@ function App() {
                   <div className="text-amber-600 font-bold text-sm mb-2">2026.01.17</div>
                   <ul className="text-gray-600 text-sm space-y-1">
                     <li>- 완식 기준 17번으로 조정</li>
+                    <li>- 두쫀쿠 단면 개선</li>
                   </ul>
                 </div>
                 <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-4 text-white">
@@ -204,6 +205,22 @@ function App() {
                   </div>
                   <ul className="text-sm space-y-1">
                     <li>- 앱인토스 '두바이 왕자' 정식 출시!</li>
+                    <li>- 토스 &gt; 미니앱 &gt; 콘텐츠 &gt; 두바이 왕자</li>
+                  </ul>
+                </div>
+                <div>
+                  <div className="text-amber-600 font-bold text-sm mb-2">2026.01.15</div>
+                  <ul className="text-gray-600 text-sm space-y-1">
+                    <li>- 앱인토스 2차 반려 반영</li>
+                    <li>- 쿠팡 파트너스 환경변수 분리</li>
+                  </ul>
+                </div>
+                <div>
+                  <div className="text-amber-600 font-bold text-sm mb-2">2026.01.13</div>
+                  <ul className="text-gray-600 text-sm space-y-1">
+                    <li>- 앱인토스 기본 셋팅</li>
+                    <li>- 앱인토스 1차 반려 반영</li>
+                    <li>- 앱 아이콘 웹 URL 설정</li>
                   </ul>
                 </div>
                 <div>
