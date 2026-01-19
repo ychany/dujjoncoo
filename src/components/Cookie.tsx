@@ -6,6 +6,9 @@ interface CookieProps {
   isEating: boolean
 }
 
+// 안드로이드 감지
+const isAndroid = /android/i.test(navigator.userAgent)
+
 export default function Cookie({ stage, onClick, isEating }: CookieProps) {
   const uniqueId = useId().replace(/:/g, '')
   // 베어먹은 비율 (0 = 안먹음, 1 = 다먹음) - 마지막에 한 입 남김
@@ -65,7 +68,7 @@ export default function Cookie({ stage, onClick, isEating }: CookieProps) {
       {/* 쿠키 SVG */}
       <svg
         viewBox="0 0 100 100"
-        className={`w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 transition-transform duration-100 ${
+        className={`${isAndroid ? 'w-64 h-64' : 'w-72 h-72'} md:w-80 md:h-80 transition-transform duration-100 ${
           isEating ? 'animate-bite-shake' : 'hover:scale-105 active:scale-95'
         }`}
       >

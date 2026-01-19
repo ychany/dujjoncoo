@@ -151,7 +151,7 @@ function App() {
           </p>
 
           {/* 쿠키 미리보기 - 왕관 + 실제 Cookie 컴포넌트 */}
-          <div className="mb-4 pointer-events-none scale-75 relative">
+          <div className="-mb-2 pointer-events-none scale-75 relative">
             {/* 왕관 */}
             <div className="absolute -top-10 left-1/2 -translate-x-1/2 z-10 text-5xl animate-bounce">
               👑
@@ -159,7 +159,7 @@ function App() {
             <Cookie stage={0} onClick={() => {}} isEating={false} />
           </div>
 
-          <div className="bg-amber-50 rounded-xl p-3 mb-4 max-w-xs mx-auto">
+          <div className="bg-amber-50 rounded-xl p-3 mb-3 max-w-xs mx-auto">
             <div className="text-amber-700 font-bold text-sm">실제 가격</div>
             <div className="text-2xl font-black text-amber-800">₩6,000</div>
             <div className="text-amber-500 text-xs">(여기선 무료)</div>
@@ -195,6 +195,14 @@ function App() {
                 </button>
               </div>
               <div className="p-6 overflow-y-auto max-h-[60vh] space-y-6">
+                <div>
+                  <div className="text-amber-600 font-bold text-sm mb-2">2026.01.20</div>
+                  <ul className="text-gray-600 text-sm space-y-1">
+                    <li>- 안드로이드/iOS 쿠키 크기 최적화</li>
+                    <li>- 홈 화면 레이아웃 조정</li>
+                    <li>- 음식·음료 카테고리 수정</li>
+                  </ul>
+                </div>
                 <div>
                   <div className="text-amber-600 font-bold text-sm mb-2">2026.01.17</div>
                   <ul className="text-gray-600 text-sm space-y-1">
