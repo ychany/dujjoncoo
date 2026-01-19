@@ -6,7 +6,7 @@
 
 ## 플레이하기
 
-- **토스 앱**: [minion.toss.im/JesOF8A2](https://minion.toss.im/JesOF8A2) (미니앱 > 콘텐츠 > 두바이 왕자)
+- **토스 앱**: [minion.toss.im/JesOF8A2](https://minion.toss.im/JesOF8A2) (미니앱 > 음식·음료 > 두바이 왕자)
 - **웹**: [dujjoncoo.vercel.app](https://dujjoncoo.vercel.app)
 
 ## 소개

@@ -210,7 +210,7 @@ function App() {
                   </div>
                   <ul className="text-sm space-y-1">
                     <li>- 앱인토스 '두바이 왕자' 정식 출시!</li>
-                    <li>- 토스 &gt; 미니앱 &gt; 콘텐츠 &gt; 두바이 왕자</li>
+                    <li>- 토스 &gt; 미니앱 &gt; 음식·음료 &gt; 두바이 왕자</li>
                   </ul>
                 </div>
                 <div>
