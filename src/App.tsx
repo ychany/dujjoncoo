@@ -96,7 +96,7 @@ function App() {
   // 시작 화면
   if (!started) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-100 to-amber-200 flex flex-col items-center justify-center p-4 relative">
+      <div className="h-[100dvh] bg-gradient-to-b from-amber-100 to-amber-200 flex flex-col items-center justify-center p-4 relative overflow-hidden">
         {/* 좌측 상단 버튼들 */}
         <div className="absolute top-4 left-4 flex gap-2">
           {/* 메뉴 버튼 */}
@@ -276,7 +276,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-100 to-amber-200 flex flex-col items-center justify-between p-4 relative overflow-hidden">
+    <div className="h-[100dvh] bg-gradient-to-b from-amber-100 to-amber-200 flex flex-col items-center justify-between p-4 relative overflow-hidden">
       {/* 좌측 상단 홈 버튼 */}
       <div className="absolute top-4 left-4 z-10">
         <button
