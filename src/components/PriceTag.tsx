@@ -16,11 +16,13 @@ export default function PriceTag({ saved }: PriceTagProps) {
       <div className="text-amber-500 text-sm mt-1">
         (오늘도 못 삼)
       </div>
-      {saved > 0 && (
-        <div className="mt-2 text-green-600 font-semibold animate-pulse">
-          💰 {saved.toLocaleString()}원 절약 중!
-        </div>
-      )}
+      <div className="mt-2 h-6">
+        {saved > 0 && (
+          <div className="text-green-600 font-semibold animate-pulse">
+            💰 {saved.toLocaleString()}원 절약 중!
+          </div>
+        )}
+      </div>
     </div>
   )
 }

@@ -11,6 +11,11 @@ export function useSound() {
     }
 
     const ctx = audioContextRef.current
+
+    // iOS Safari에서 AudioContext resume 필요
+    if (ctx.state === 'suspended') {
+      ctx.resume()
+    }
     const now = ctx.currentTime
 
     // 랜덤하게 다른 씹는 소리 생성
