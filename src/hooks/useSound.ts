@@ -77,6 +77,12 @@ export function useSound() {
     }
 
     const ctx = audioContextRef.current
+
+    // iOS Safari에서 AudioContext resume 필요
+    if (ctx.state === 'suspended') {
+      ctx.resume()
+    }
+
     const now = ctx.currentTime
 
     // 완료 사운드 (상승 멜로디)
