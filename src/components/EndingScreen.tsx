@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { getTossShareLink, share } from '@apps-in-toss/web-framework'
 
 interface EndingScreenProps {
@@ -19,7 +20,10 @@ const COMPLETION_MESSAGES = [
 
 export default function EndingScreen({ onReset, onHome }: EndingScreenProps) {
   const COOKIE_PRICE = 6000
-  const completionMessage = COMPLETION_MESSAGES[Math.floor(Math.random() * COMPLETION_MESSAGES.length)]
+  // 컴포넌트 마운트 시 한 번만 랜덤 선택
+  const completionMessage = useMemo(() =>
+    COMPLETION_MESSAGES[Math.floor(Math.random() * COMPLETION_MESSAGES.length)]
+  , [])
 
   const handleShare = async () => {
     const shareText = `🍪 두쫀쿠 완식!\n나는 두바이 쫀득쿠키를 먹고\n₩${COOKIE_PRICE.toLocaleString()}을 아꼈다!\n\n너도 먹어볼래? 👉`
