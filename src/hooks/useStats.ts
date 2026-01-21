@@ -11,10 +11,17 @@ const getTodayKey = () => {
 // 고유 세션 ID (모듈 레벨에서 한 번만 생성)
 const SESSION_ID = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
 
+// 일별 통계 타입
+export interface DailyStats {
+  date: string
+  count: number
+}
+
 export function useStats() {
   const [activeUsers, setActiveUsers] = useState(0)
   const [todayCookies, setTodayCookies] = useState(0)
   const [totalCookies, setTotalCookies] = useState(0)
+  const [dailyStats, setDailyStats] = useState<DailyStats[]>([])
   const [todayKey, setTodayKey] = useState(getTodayKey())
   const isRegistered = useRef(false)
 
@@ -32,6 +39,7 @@ export function useStats() {
   useEffect(() => {
     const todayCookiesRef = ref(db, `stats/cookies/${todayKey}`)
     const totalCookiesRef = ref(db, 'stats/totalCookies')
+    const allCookiesRef = ref(db, 'stats/cookies')
     const presenceRef = ref(db, 'presence')
     const connectedRef = ref(db, '.info/connected')
     const myPresenceRef = ref(db, `presence/${SESSION_ID}`)
@@ -52,6 +60,17 @@ export function useStats() {
       setTotalCookies(snapshot.val() || 0)
     })
 
+    // 일별 통계 구독
+    const unsubDaily = onValue(allCookiesRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val()
+        const stats: DailyStats[] = Object.entries(data)
+          .map(([date, count]) => ({ date, count: count as number }))
+          .sort((a, b) => b.date.localeCompare(a.date)) // 최신순 정렬
+        setDailyStats(stats)
+      }
+    })
+
     // Firebase 연결 상태 감지
     const unsubConnected = onValue(connectedRef, (snapshot) => {
       if (snapshot.val() === true && !isRegistered.current) {
@@ -67,6 +86,7 @@ export function useStats() {
       unsubActive()
       unsubCookies()
       unsubTotal()
+      unsubDaily()
       unsubConnected()
       // 컴포넌트 언마운트 시 presence 삭제
       if (isRegistered.current) {
@@ -85,5 +105,5 @@ export function useStats() {
     runTransaction(totalCookiesRef, (current) => (current || 0) + 1)
   }
 
-  return { activeUsers, todayCookies, totalCookies, addCookie }
+  return { activeUsers, todayCookies, totalCookies, dailyStats, addCookie }
 }

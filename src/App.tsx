@@ -22,9 +22,10 @@ function App() {
   const [started, setStarted] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [showPatchNotes, setShowPatchNotes] = useState(false)
+  const [showDailyStats, setShowDailyStats] = useState(false)
 
   const { playBiteSound, playCompleteSound } = useSound()
-  const { activeUsers, todayCookies, totalCookies, addCookie } = useStats()
+  const { activeUsers, todayCookies, totalCookies, dailyStats, addCookie } = useStats()
 
   const handleShare = async () => {
     try {
@@ -118,6 +119,15 @@ function App() {
                 <div className="absolute left-0 mt-2 w-44 bg-gray-900/95 rounded-xl shadow-xl z-20 overflow-hidden">
                   <button
                     className="flex items-center gap-3 px-4 py-3 text-white hover:bg-white/10 transition-colors w-full"
+                    onClick={() => { setMenuOpen(false); setShowDailyStats(true); }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                    </svg>
+                    <span className="text-sm">일별 통계</span>
+                  </button>
+                  <button
+                    className="flex items-center gap-3 px-4 py-3 text-white hover:bg-white/10 transition-colors w-full"
                     onClick={() => { setMenuOpen(false); setShowPatchNotes(true); }}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -182,6 +192,44 @@ function App() {
           © 2026 JO YEONG CHAN. All rights reserved.
         </p>
 
+        {/* 일별 통계 모달 */}
+        {showDailyStats && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setShowDailyStats(false)}>
+            <div className="bg-white rounded-2xl max-w-md w-full max-h-[80vh] overflow-hidden shadow-2xl" onClick={e => e.stopPropagation()}>
+              <div className="bg-amber-500 px-6 py-4 flex justify-between items-center">
+                <h2 className="text-xl font-bold text-white">일별 통계</h2>
+                <button onClick={() => setShowDailyStats(false)} className="text-white/80 hover:text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div className="p-6 overflow-y-auto max-h-[60vh]">
+                <div className="text-center mb-4">
+                  <div className="text-3xl font-black text-amber-800">{totalCookies.toLocaleString()}개</div>
+                  <div className="text-amber-600 text-sm">누적 두쫀쿠</div>
+                </div>
+                <div className="space-y-2">
+                  {dailyStats.map((stat) => {
+                    const date = new Date(stat.date)
+                    const dayNames = ['일', '월', '화', '수', '목', '금', '토']
+                    const formatted = `${date.getMonth() + 1}월 ${date.getDate()}일 (${dayNames[date.getDay()]})`
+                    return (
+                      <div key={stat.date} className="flex justify-between items-center bg-amber-50 rounded-lg px-4 py-3">
+                        <span className="text-amber-700 font-medium">{formatted}</span>
+                        <span className="text-amber-800 font-bold">{stat.count.toLocaleString()}개</span>
+                      </div>
+                    )
+                  })}
+                  {dailyStats.length === 0 && (
+                    <div className="text-center text-gray-400 py-8">아직 데이터가 없어요</div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* 패치노트 모달 */}
         {showPatchNotes && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setShowPatchNotes(false)}>
@@ -195,6 +243,12 @@ function App() {
                 </button>
               </div>
               <div className="p-6 overflow-y-auto max-h-[60vh] space-y-6">
+                <div>
+                  <div className="text-amber-600 font-bold text-sm mb-2">2026.01.22</div>
+                  <ul className="text-gray-600 text-sm space-y-1">
+                    <li>- 일별 통계 기능 추가</li>
+                  </ul>
+                </div>
                 <div>
                   <div className="text-amber-600 font-bold text-sm mb-2">2026.01.20</div>
                   <ul className="text-gray-600 text-sm space-y-1">
