@@ -7,6 +7,7 @@ import EndingScreen from './components/EndingScreen'
 import Crumbs from './components/Crumbs'
 import { useSound } from './hooks/useSound'
 import { useStats } from './hooks/useStats'
+import { useAd } from './hooks/useAd'
 import { getTossShareLink, share } from '@apps-in-toss/web-framework'
 
 const BITES_TO_FINISH = 17 // 쿠키 하나 먹는데 필요한 클릭 수
@@ -26,6 +27,7 @@ function App() {
 
   const { playBiteSound, playCompleteSound } = useSound()
   const { activeUsers, todayCookies, totalCookies, dailyStats, addCookie } = useStats()
+  const { loadAd, showAd } = useAd()
 
   const handleShare = async () => {
     try {
@@ -52,6 +54,13 @@ function App() {
   const stage = Math.floor((biteCount / BITES_TO_FINISH) * 5)
   const savedAmount = Math.floor((biteCount / BITES_TO_FINISH) * COOKIE_PRICE)
 
+  // 먹기 시작할 때 광고 미리 로드
+  useEffect(() => {
+    if (started && biteCount === 0) {
+      loadAd()
+    }
+  }, [started, biteCount, loadAd])
+
   const handleBite = useCallback(() => {
     const now = Date.now()
     if (now - lastBiteTime < COOLDOWN_MS) return
@@ -67,15 +76,16 @@ function App() {
     setBiteCount(newCount)
 
     if (newCount >= BITES_TO_FINISH) {
-      // 쿠키 완식!
+      // 쿠키 완식! 엔딩 화면 먼저 띄우고 광고
       setTimeout(() => {
         playCompleteSound()
         setCookiesEaten(c => c + 1)
         addCookie() // Firebase에 기록
-        setShowEnding(true)
+        setShowEnding(true) // 엔딩 화면 먼저 표시
+        showAd() // 광고가 엔딩 위에 덮임, 닫으면 바로 엔딩 보임
       }, 300)
     }
-  }, [lastBiteTime, biteCount, playBiteSound, playCompleteSound, addCookie])
+  }, [lastBiteTime, biteCount, playBiteSound, playCompleteSound, addCookie, showAd])
 
   const handleReset = useCallback(() => {
     setBiteCount(0)
