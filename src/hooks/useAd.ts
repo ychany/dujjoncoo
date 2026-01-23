@@ -1,8 +1,8 @@
 import { useCallback, useRef, useState } from 'react'
 import { loadFullScreenAd, showFullScreenAd } from '@apps-in-toss/web-bridge'
 
-// 테스트용 광고 ID (개발 단계에서만 사용)
-const TEST_AD_ID = 'ait-ad-test-interstitial-id'
+// 광고 그룹 ID (환경변수에서 로드)
+const AD_GROUP_ID = import.meta.env.VITE_AD_GROUP_ID || ''
 
 export function useAd() {
   const [isAdLoaded, setIsAdLoaded] = useState(false)
@@ -20,7 +20,7 @@ export function useAd() {
       if (adLoadedRef.current) return // 이미 로드됨
 
       loadFullScreenAd({
-        options: { adGroupId: TEST_AD_ID },
+        options: { adGroupId: AD_GROUP_ID },
         onEvent: (event) => {
           if (event.type === 'loaded') {
             console.log('Ad loaded successfully')
@@ -57,7 +57,7 @@ export function useAd() {
       setIsShowingAd(true)
 
       showFullScreenAd({
-        options: { adGroupId: TEST_AD_ID },
+        options: { adGroupId: AD_GROUP_ID },
         onEvent: (event) => {
           console.log('Ad event:', event.type)
           if (event.type === 'dismissed' || event.type === 'failedToShow') {
