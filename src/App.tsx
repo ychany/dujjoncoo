@@ -27,7 +27,7 @@ function App() {
 
   const { playBiteSound, playCompleteSound } = useSound()
   const { activeUsers, todayCookies, totalCookies, dailyStats, addCookie } = useStats()
-  const { loadAd, showAd } = useAd()
+  const { loadAd, showAd, isAdSupported } = useAd()
 
   const handleShare = async () => {
     try {
@@ -76,13 +76,12 @@ function App() {
     setBiteCount(newCount)
 
     if (newCount >= BITES_TO_FINISH) {
-      // 쿠키 완식! 엔딩 화면 먼저 띄우고 광고
+      // 쿠키 완식! 엔딩 화면 표시 (광고는 버튼 클릭 시)
       setTimeout(() => {
         playCompleteSound()
         setCookiesEaten(c => c + 1)
         addCookie() // Firebase에 기록
-        setShowEnding(true) // 엔딩 화면 먼저 표시
-        showAd() // 광고가 엔딩 위에 덮임, 닫으면 바로 엔딩 보임
+        setShowEnding(true) // 엔딩 화면 표시
       }, 300)
     }
   }, [lastBiteTime, biteCount, playBiteSound, playCompleteSound, addCookie, showAd])
@@ -389,7 +388,17 @@ function App() {
 
       {/* 엔딩 화면 */}
       {showEnding && (
-        <EndingScreen cookiesEaten={cookiesEaten} onReset={handleReset} onHome={() => { setStarted(false); setBiteCount(0); setShowEnding(false); }} />
+        <EndingScreen
+          cookiesEaten={cookiesEaten}
+          onReset={handleReset}
+          onHome={() => { setStarted(false); setBiteCount(0); setShowEnding(false); }}
+          onAdReset={isAdSupported ? () => {
+            showAd(() => {
+              handleReset()
+              loadAd() // 다음 광고 미리 로드
+            })
+          } : undefined}
+        />
       )}
     </div>
   )

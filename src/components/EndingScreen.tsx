@@ -5,6 +5,7 @@ interface EndingScreenProps {
   cookiesEaten: number
   onReset: () => void
   onHome: () => void
+  onAdReset?: () => void // 광고 보고 다시 먹기
 }
 
 const COMPLETION_MESSAGES = [
@@ -18,7 +19,7 @@ const COMPLETION_MESSAGES = [
   '또 먹고 싶다...',
 ]
 
-export default function EndingScreen({ onReset, onHome }: EndingScreenProps) {
+export default function EndingScreen({ onReset, onHome, onAdReset }: EndingScreenProps) {
   const COOKIE_PRICE = 6000
   // 컴포넌트 마운트 시 한 번만 랜덤 선택
   const completionMessage = useMemo(() =>
@@ -73,13 +74,22 @@ export default function EndingScreen({ onReset, onHome }: EndingScreenProps) {
           "와... 이게 {(COOKIE_PRICE).toLocaleString()}원짜리 맛..."
         </p>
 
-        {/* 메인 버튼 */}
-        <button
-          onClick={onReset}
-          className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white py-3 px-6 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all active:scale-95"
-        >
-          🍪 한 개 더 먹기
-        </button>
+        {/* 메인 버튼 - 광고 보고 다시 먹기 */}
+        {onAdReset ? (
+          <button
+            onClick={onAdReset}
+            className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white py-3 px-6 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all active:scale-95"
+          >
+            🍪 광고 보고 한 개 더 먹기
+          </button>
+        ) : (
+          <button
+            onClick={onReset}
+            className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white py-3 px-6 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all active:scale-95"
+          >
+            🍪 한 개 더 먹기
+          </button>
+        )}
 
         {/* 서브 버튼들 */}
         <div className="grid grid-cols-2 gap-2 mt-3">

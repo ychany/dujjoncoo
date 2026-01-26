@@ -4,10 +4,20 @@ import { loadFullScreenAd, showFullScreenAd } from '@apps-in-toss/web-bridge'
 // 광고 그룹 ID (환경변수에서 로드)
 const AD_GROUP_ID = import.meta.env.VITE_AD_GROUP_ID || ''
 
+// 광고 지원 여부 체크
+const isAdSupported = () => {
+  try {
+    return loadFullScreenAd?.isSupported?.() ?? false
+  } catch {
+    return false
+  }
+}
+
 export function useAd() {
   const [isAdLoaded, setIsAdLoaded] = useState(false)
   const [isShowingAd, setIsShowingAd] = useState(false)
   const adLoadedRef = useRef(false)
+  const adSupported = isAdSupported()
 
   // 광고 미리 로드
   const loadAd = useCallback(() => {
@@ -83,5 +93,5 @@ export function useAd() {
     }
   }, [loadAd])
 
-  return { loadAd, showAd, isAdLoaded, isShowingAd }
+  return { loadAd, showAd, isAdLoaded, isShowingAd, isAdSupported: adSupported }
 }
