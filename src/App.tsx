@@ -24,6 +24,7 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [showPatchNotes, setShowPatchNotes] = useState(false)
   const [showDailyStats, setShowDailyStats] = useState(false)
+  const [showAdNotice, setShowAdNotice] = useState(false)
 
   const { playBiteSound, playCompleteSound } = useSound()
   const { activeUsers, todayCookies, totalCookies, dailyStats, addCookie } = useStats()
@@ -76,12 +77,26 @@ function App() {
     setBiteCount(newCount)
 
     if (newCount >= BITES_TO_FINISH) {
-      // 쿠키 완식! 엔딩 화면 표시 (광고는 버튼 클릭 시)
+      // 쿠키 완식! 광고 안내 → 광고 → 엔딩 화면
       setTimeout(() => {
         playCompleteSound()
         setCookiesEaten(c => c + 1)
         addCookie() // Firebase에 기록
-        setShowEnding(true) // 엔딩 화면 표시
+
+        if (isAdSupported) {
+          // 앱인토스: 광고 안내 → 광고 → 엔딩
+          setShowAdNotice(true)
+          setTimeout(() => {
+            setShowAdNotice(false)
+            showAd(() => {
+              setShowEnding(true)
+              loadAd() // 다음 광고 미리 로드
+            })
+          }, 1500)
+        } else {
+          // 웹: 바로 엔딩
+          setShowEnding(true)
+        }
       }, 300)
     }
   }, [lastBiteTime, biteCount, playBiteSound, playCompleteSound, addCookie, showAd])
@@ -385,6 +400,17 @@ function App() {
           © 2026 JO YEONG CHAN
         </p>
       </div>
+
+      {/* 광고 안내 화면 */}
+      {showAdNotice && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+          <div className="text-center text-white">
+            <div className="text-5xl mb-4">🎉</div>
+            <div className="text-2xl font-bold mb-2">완식 성공!</div>
+            <div className="text-white/80">잠시 후 광고가 표시됩니다</div>
+          </div>
+        </div>
+      )}
 
       {/* 엔딩 화면 */}
       {showEnding && (
