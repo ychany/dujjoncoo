@@ -418,12 +418,12 @@ function App() {
           cookiesEaten={cookiesEaten}
           onReset={handleReset}
           onHome={() => { setStarted(false); setBiteCount(0); setShowEnding(false); }}
-          onAdReset={isAdSupported ? () => {
-            showAd(() => {
-              handleReset()
-              loadAd() // 다음 광고 미리 로드
-            })
-          } : undefined}
+          // onAdReset={isAdSupported ? () => {
+          //   showAd(() => {
+          //     handleReset()
+          //     loadAd()
+          //   })
+          // } : undefined}
         />
       )}
     </div>
